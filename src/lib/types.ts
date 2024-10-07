@@ -7,4 +7,4 @@ export type Beneficiary = {
   lastName: string,
   phoneNumber: string,
   status: BeneficiaryStatus,
-}
+};

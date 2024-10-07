@@ -1,14 +1,17 @@
 import * as React from 'react';
-import Accordion from '@mui/material/Accordion';
-import AccordionActions from '@mui/material/AccordionActions';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import Button from '@mui/material/Button';
 import { TypeOf } from "zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Box, TextField } from '@mui/material';
+import {
+  Box,
+  TextField,
+  Accordion,
+  AccordionActions,
+  AccordionSummary,
+  AccordionDetails,
+  Button
+} from '@mui/material';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 function Page() {
 
@@ -21,7 +24,7 @@ function Page() {
             aria-controls="panel1-content"
             id="panel1-header"
           >
-            Accordion 1
+            Agregar beneficiario
           </AccordionSummary>
           <AccordionDetails>
             <Box
