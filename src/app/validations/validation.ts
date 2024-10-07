@@ -1,4 +1,4 @@
-import * as z from "zod";
+import { z, TypeOf } from "zod";
 
 const beneficiary = z.object({
   firstName: z.string(),
@@ -7,6 +7,8 @@ const beneficiary = z.object({
   status: z.string(),
 });
 
-export const schema = z.object({
+export const beneficiarySchema = z.object({
   beneficiaries: z.array(beneficiary),
 });
+
+export type Beneficiary =  TypeOf<typeof beneficiarySchema>;

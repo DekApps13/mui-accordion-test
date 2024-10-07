@@ -1,7 +1,10 @@
+"use client";
+
 import * as React from 'react';
 import { TypeOf } from "zod";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { SubmitHandler, useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { beneficiarySchema, Beneficiary } from "./validations/validation";
 import {
   Box,
   TextField,
@@ -14,6 +17,42 @@ import {
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 function Page() {
+  const {
+    control,
+    getValues,
+    setValue,
+   } = useForm<Beneficiary>({
+    mode: "all",
+    resolver: zodResolver(beneficiarySchema),
+    defaultValues: {
+      beneficiaries: [
+        {
+          firstName: "",
+          lastName: "",
+          phoneNumber: "",
+          status: "creating",
+        },
+        {
+          firstName: "",
+          lastName: "",
+          phoneNumber: "",
+          status: "creating",
+        },
+        {
+          firstName: "",
+          lastName: "",
+          phoneNumber: "",
+          status: "creating",
+        },
+        {
+          firstName: "",
+          lastName: "",
+          phoneNumber: "",
+          status: "creating",
+        },
+      ],
+    }
+  });
 
   return (
     <div className="grid justify-center h-full">
@@ -34,9 +73,13 @@ function Page() {
               autoComplete="off"
               className="grid grid-cols-1 justify-stretch"
             >
-              <TextField id="firstName" label="Nombre" variant="filled" />
-              <TextField id="lastName" label="Apellido" variant="filled" />
-              <TextField id="phoneNumber" label="Número de celular" variant="filled" />
+              <Controller
+                name="firstName"
+                control={control}
+                render={({ field }) => (
+                  <TextField id="firstName" label="Nombre" variant="filled" />
+                )}
+              />
 
               <AccordionActions>
                 <Button type="submit">Guardar</Button>
