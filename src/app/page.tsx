@@ -5,8 +5,13 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Button from '@mui/material/Button';
+import { TypeOf } from "zod";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Box, TextField } from '@mui/material';
 
 function Page() {
+
   return (
     <div className="grid justify-center h-full">
       <div className="bg-slate-400 w-96 sm:max-w-sm p-4">
@@ -19,8 +24,21 @@ function Page() {
             Accordion 1
           </AccordionSummary>
           <AccordionDetails>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            malesuada lacus ex, sit amet blandit leo lobortis eget.
+            <Box
+              component="form"
+              sx={{ '& > :not(style)': { m: 1 } }}
+              noValidate
+              autoComplete="off"
+              className="grid grid-cols-1 justify-stretch"
+            >
+              <TextField id="firstName" label="Nombre" variant="filled" />
+              <TextField id="lastName" label="Apellido" variant="filled" />
+              <TextField id="phoneNumber" label="Número de celular" variant="filled" />
+
+              <AccordionActions>
+                <Button type="submit">Guardar</Button>
+              </AccordionActions>
+            </Box>
           </AccordionDetails>
         </Accordion>
         <Accordion>
