@@ -1,10 +1,9 @@
 "use client";
 
 import * as React from 'react';
-import { TypeOf } from "zod";
-import { SubmitHandler, useForm, Controller } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { beneficiarySchema, Beneficiary } from "./validations/validation";
+import { beneficiarySchema, Beneficiaries } from "./validations/validation";
 import {
   Box,
   TextField,
@@ -16,9 +15,18 @@ import {
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
-function getAccordionForm(data: Beneficiary, control: any): JSX.Element {
-  const accordionForm = data.beneficiaries?.map(beneficiary => (
-    <Accordion>
+type AccordionProps = {
+  data: Beneficiaries,
+  control: any,
+};
+
+function AccordionForm({ data, control }: AccordionProps): JSX.Element {
+  const beneficiaries = data.beneficiaries;
+
+  const accordionItems = beneficiaries.map(beneficiary => (
+    <Accordion
+      key={beneficiary.id}
+    >
       <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
         aria-controls={`panel${beneficiary.id}-content`}
@@ -35,24 +43,24 @@ function getAccordionForm(data: Beneficiary, control: any): JSX.Element {
           className="grid grid-cols-1 justify-stretch"
         >
           <Controller
-            name={`beneficiary${beneficiary.id}-firstName`}
+            name={`beneficiary.${beneficiary.id}.firstName`}
             control={control}
             render={({ field }) => (
-              <TextField id={`beneficiary${beneficiary.id}-firstName`} label="Nombre" variant="filled" />
+              <TextField id={`beneficiary.${beneficiary.id}.firstName`} label="Nombre" variant="filled" />
             )}
           />
           <Controller
-            name={`beneficiary${beneficiary.id}-lastName`}
+            name={`beneficiary.${beneficiary.id}.lastName`}
             control={control}
             render={({ field }) => (
-              <TextField id={`beneficiary${beneficiary.id}-lastName`} label="Apellido" variant="filled" />
+              <TextField id={`beneficiary.${beneficiary.id}.lastName`} label="Apellido" variant="filled" />
             )}
           />
           <Controller
-            name={`beneficiary${beneficiary.id}-phoneNumber`}
+            name={`beneficiary.${beneficiary.id}.phoneNumber`}
             control={control}
             render={({ field }) => (
-              <TextField id={`beneficiary${beneficiary.id}-phoneNumber`} label="Apellido" variant="filled" />
+              <TextField id={`beneficiary.${beneficiary.id}.phoneNumber`} label="Número de celular" variant="filled" />
             )}
           />
 
@@ -62,10 +70,10 @@ function getAccordionForm(data: Beneficiary, control: any): JSX.Element {
         </Box>
       </AccordionDetails>
     </Accordion>
-  ));
+  ))
 
   return (
-    <div>{accordionForm}</div>
+    <div>{accordionItems}</div>
   );
 }
 
@@ -74,7 +82,7 @@ function Page() {
     control,
     getValues,
     setValue,
-  } = useForm<Beneficiary>({
+  } = useForm<Beneficiaries>({
     mode: "all",
     resolver: zodResolver(beneficiarySchema),
     defaultValues: {
@@ -114,7 +122,10 @@ function Page() {
   return (
     <div className="grid justify-center h-full">
       <div className="bg-slate-400 w-96 sm:max-w-sm p-4">
-        {getAccordionForm(getValues("beneficiaries"), control)}
+        <AccordionForm
+          data={getValues()}
+          control={control}
+        />
       </div>
     </div>
   )

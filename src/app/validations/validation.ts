@@ -9,7 +9,7 @@ const beneficiary = z.object({
 });
 
 export const beneficiarySchema = z.object({
-  beneficiaries: z.array(beneficiary),
+  beneficiaries: z.array(beneficiary).nonempty(),
 });
 
-export type Beneficiary =  TypeOf<typeof beneficiarySchema>;
+export type Beneficiaries =  TypeOf<typeof beneficiarySchema>;
