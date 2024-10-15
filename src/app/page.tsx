@@ -1,81 +1,11 @@
 "use client";
 
 import * as React from 'react';
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { beneficiarySchema, Beneficiaries } from "./validations/validation";
-import {
-  Box,
-  TextField,
-  Accordion,
-  AccordionActions,
-  AccordionSummary,
-  AccordionDetails,
-  Button
-} from '@mui/material';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
-type AccordionProps = {
-  data: Beneficiaries,
-  control: any,
-};
-
-function AccordionForm({ data, control }: AccordionProps): JSX.Element {
-  const beneficiaries = data.beneficiaries;
-
-  const accordionItems = beneficiaries.map(beneficiary => (
-    <Accordion
-      key={beneficiary.id}
-    >
-      <AccordionSummary
-        expandIcon={<ExpandMoreIcon />}
-        aria-controls={`panel${beneficiary.id}-content`}
-        id={`panel${beneficiary.id}-header`}
-      >
-        Agregar beneficiario
-      </AccordionSummary>
-      <AccordionDetails>
-        <Box
-          component="form"
-          sx={{ '& > :not(style)': { m: 1 } }}
-          noValidate
-          autoComplete="off"
-          className="grid grid-cols-1 justify-stretch"
-        >
-          <Controller
-            name={`beneficiary.${beneficiary.id}.firstName`}
-            control={control}
-            render={({ field }) => (
-              <TextField id={`beneficiary.${beneficiary.id}.firstName`} label="Nombre" variant="filled" />
-            )}
-          />
-          <Controller
-            name={`beneficiary.${beneficiary.id}.lastName`}
-            control={control}
-            render={({ field }) => (
-              <TextField id={`beneficiary.${beneficiary.id}.lastName`} label="Apellido" variant="filled" />
-            )}
-          />
-          <Controller
-            name={`beneficiary.${beneficiary.id}.phoneNumber`}
-            control={control}
-            render={({ field }) => (
-              <TextField id={`beneficiary.${beneficiary.id}.phoneNumber`} label="Número de celular" variant="filled" />
-            )}
-          />
-
-          <AccordionActions>
-            <Button type="submit">Guardar</Button>
-          </AccordionActions>
-        </Box>
-      </AccordionDetails>
-    </Accordion>
-  ))
-
-  return (
-    <div>{accordionItems}</div>
-  );
-}
+import BeneficiaryAccordion from '@/components/BeneficiaryAccordion';
 
 function Page() {
   const {
@@ -92,28 +22,28 @@ function Page() {
           firstName: "",
           lastName: "",
           phoneNumber: "",
-          status: "creating",
+          status: "enabled",
         },
         {
           id: 2,
           firstName: "",
           lastName: "",
           phoneNumber: "",
-          status: "creating",
+          status: "disabled",
         },
         {
           id: 3,
           firstName: "",
           lastName: "",
           phoneNumber: "",
-          status: "creating",
+          status: "disabled",
         },
         {
           id: 4,
           firstName: "",
           lastName: "",
           phoneNumber: "",
-          status: "creating",
+          status: "disabled",
         },
       ],
     }
@@ -122,9 +52,25 @@ function Page() {
   return (
     <div className="grid justify-center h-full">
       <div className="bg-slate-400 w-96 sm:max-w-sm p-4">
-        <AccordionForm
-          data={getValues()}
+        <BeneficiaryAccordion
+          data={getValues("beneficiaries")[0]}
           control={control}
+          disabled
+        />
+        <BeneficiaryAccordion
+          data={getValues("beneficiaries")[1]}
+          control={control}
+          disabled
+        />
+        <BeneficiaryAccordion
+          data={getValues("beneficiaries")[2]}
+          control={control}
+          disabled
+        />
+        <BeneficiaryAccordion
+          data={getValues("beneficiaries")[3]}
+          control={control}
+          disabled
         />
       </div>
     </div>

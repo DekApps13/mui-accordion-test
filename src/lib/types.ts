@@ -8,3 +8,9 @@ export type Beneficiary = {
   phoneNumber: string,
   status: BeneficiaryStatus,
 };
+
+export type BaseComponent = {
+  name: string,
+  label: string,
+  control: any,
+}

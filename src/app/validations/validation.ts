@@ -1,3 +1,4 @@
+import { BeneficiaryStatus } from "@/lib/types";
 import { z, TypeOf } from "zod";
 
 const beneficiary = z.object({
@@ -5,7 +6,7 @@ const beneficiary = z.object({
   firstName: z.string(),
   lastName: z.string(),
   phoneNumber: z.string(),
-  status: z.string(),
+  status: z.custom<BeneficiaryStatus>(),
 });
 
 export const beneficiarySchema = z.object({
@@ -13,3 +14,4 @@ export const beneficiarySchema = z.object({
 });
 
 export type Beneficiaries =  TypeOf<typeof beneficiarySchema>;
+export type Beneficiary =  TypeOf<typeof beneficiary>;
